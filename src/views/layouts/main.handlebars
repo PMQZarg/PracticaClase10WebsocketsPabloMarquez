@@ -1,0 +1,30 @@
+<div>
+  Trabajando desde WebSockets
+
+<input type="text" id="message">
+<button id="btn-send" onclick="enviarMensaje()">Enviar</button>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+{{!se instancia el socket del cliente además del propio mio, se hace con esta sintaxis}}
+
+<script>
+const socket = io()
+
+function enviarMensaje(){
+  const message = document.getElementById("message").value 
+  socket.emit("message", message)
+
+  const boton = document.getElementById("btn-send")
+  boton.addEventListener("click", ()=>{
+    console.log("click")
+  })
+  //Escuchar eventos
+  socket.on("message", (data)=>{
+    console.log(`Mensaje recibido: ${data}`)
+  })
+}
+  
+</script>
+{{!<script src="/js/index.js"></script>}}
+{{!El script de socket siempre debe estar antes que el script propio}}
